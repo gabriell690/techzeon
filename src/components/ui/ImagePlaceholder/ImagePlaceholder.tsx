@@ -14,7 +14,7 @@ export default function ImagePlaceholder({
         rounded-3xl
         border
         border-zinc-800
-        bg-gradient-to-br
+        bg-linear-to-br
         from-zinc-900
         via-zinc-800
         to-zinc-900
