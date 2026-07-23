@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 
 import Home from "../pages/Home/Home";
-import Category from "../pages/Category/Category";
+import Category from "../pages/Category/CategoryPage";
 import Article from "../pages/Article";
 import Search from "../pages/Search/Search";
 import About from "../pages/About/About";
@@ -12,7 +12,8 @@ import NotFound from "../pages/NotFound/NotFound";
 
 import LoginPage from "@/auth/LoginPage";
 import ProtectedRoute from "@/auth/ProtectedRoute";
-
+import PrivacyPolicyPage from "../pages/PrivacyPolicePage";
+import TermsPage from "../pages/TermsPage";
 import AdminRoutes from "@/admin/routes";
 
 export default function AppRoutes() {
@@ -20,15 +21,24 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Routes>
         {/* SITE */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/categoria/:slug" element={<Category />} />
-          <Route path="/artigo/:slug" element={<Article />} />
-          <Route path="/buscar" element={<Search />} />
-          <Route path="/sobre" element={<About />} />
-          <Route path="/contato" element={<Contact />} />
-        </Route>
+ <Route element={<MainLayout />}>
+  <Route path="/" element={<Home />} />
+  <Route path="/categoria/:slug" element={<Category />} />
+  <Route path="/artigo/:slug" element={<Article />} />
+  <Route path="/buscar" element={<Search />} />
+  <Route path="/sobre" element={<About />} />
+  <Route path="/contato" element={<Contact />} />
 
+  <Route
+    path="/politica-de-privacidade"
+    element={<PrivacyPolicyPage />}
+  />
+
+  <Route
+    path="/termos-de-uso"
+    element={<TermsPage />}
+  />
+</Route>
         {/* LOGIN */}
         <Route path="/login" element={<LoginPage />} />
 

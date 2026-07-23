@@ -1,9 +1,20 @@
-import { useEffect, useState } from "react";
-import { useParams, Navigate } from "react-router-dom";
+// src/pages/Article/ArticlePage.tsx
 
-import ArticleContent from "../../components/article/ArticleContent";
+import { useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
+
 import type { Article } from "@/types";
+
 import { getArticleBySlug } from "@/services/articles";
+import SEO from "@/components/seo/SEO";
+import ReadingProgress from "../Article/components/ReadingProgress";
+import ArticleHero from "../../pages/Article/components/ArticleHero";
+import ArticleContent from "@/components/article/ArticleContent";
+import ReadingSidebar from "./components/ReadingSidebar";
+import AuthorCard from "./components/AuthorCard";
+import RelatedArticles from "../Article/components/RelatedArticles";
+import ArticleSchema from "@/components/seo/AticlesSchema";
+import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 
 export default function ArticlePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -31,9 +42,14 @@ export default function ArticlePage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-20 text-center">
-        Carregando...
-      </div>
+      <main className="flex min-h-screen items-center justify-center">
+        <div className="space-y-4 text-center">
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-cyan-500 border-t-transparent" />
+          <p className="text-zinc-500 dark:text-zinc-400">
+            Carregando artigo...
+          </p>
+        </div>
+      </main>
     );
   }
 
@@ -42,32 +58,86 @@ export default function ArticlePage() {
   }
 
   return (
-    <main className="container mx-auto max-w-5xl px-6 py-10">
-      {article.cover_image && (
-        <img
-          src={article.cover_image}
-          alt={article.title}
-          className="mb-8 h-96 w-full rounded-2xl object-cover"
-        />
-      )}
+    <>
+    <SEO
+  title={article.title}
+  description={article.excerpt}
+  canonical={`/artigo/${article.slug}`}
+  image={article.cover_image}
+ keywords={[]}
+  author={
+    typeof article.author === "string"
+      ? article.author
+      : article.author?.name
+  }
+  type="article"
+/>
+<ArticleSchema article={article} />
+ <BreadcrumbSchema
+  items={[
+    {
+      name: "Início",
+      url: "https://techzeon.com",
+    },
 
-      <span className="text-sm font-medium text-blue-600">
-        {article.category?.name}
-      </span>
+    ...(article.category
+      ? [
+          {
+            name: article.category.name,
+            url: `https://techzeon.com/categoria/${article.category.slug}`,
+          },
+        ]
+      : []),
 
-      <h1 className="mt-4 text-5xl font-bold">
-        {article.title}
-      </h1>
+    {
+      name: article.title,
+      url: `https://techzeon.com/artigo/${article.slug}`,
+    },
+  ]}
+/>
 
-      {article.excerpt && (
-        <p className="mt-6 text-xl text-zinc-500">
-          {article.excerpt}
-        </p>
-      )}
+      {/* Barra de progresso */}
+      <ReadingProgress />
 
-      <div className="mt-12">
-        <ArticleContent article={article} />
+      <main className="relative">
+
+        {/* Hero */}
+        <ArticleHero article={article} />
+
+        {/* Conteúdo */}
+       {/* Conteúdo */}
+<section className="mx-auto w-full max-w-[1600px] px-6 py-20 xl:px-10">
+
+  <div className="grid items-start gap-20 xl:grid-cols-[minmax(0,1fr)_340px]">
+
+    {/* Artigo */}
+    <article
+      id="article-content"
+      className="min-w-0"
+    >
+      <ArticleContent article={article} />
+
+      <div className="mt-24">
+        <AuthorCard article={article} />
       </div>
-    </main>
+
+      <div className="mt-28">
+        <RelatedArticles
+          currentArticle={article}
+        />
+      </div>
+    </article>
+
+    {/* Sidebar */}
+    <aside className="sticky top-28 hidden self-start xl:block">
+      <ReadingSidebar article={article} />
+    </aside>
+
+  </div>
+
+</section>
+
+      </main>
+    </>
   );
 }

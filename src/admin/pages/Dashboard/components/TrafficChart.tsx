@@ -41,7 +41,7 @@ export default function TrafficChart() {
         </p>
       </div>
 
-      <div className="h-[280px] pt-6">
+      <div className="h-70 pt-6">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Tooltip

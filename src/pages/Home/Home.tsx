@@ -2,7 +2,7 @@ import Hero from "@/components/home/Hero";
 import Featured from "@/components/home/Featured";
 import LatestArticles from "@/components/home/LatestArticles";
 import Categories from "@/components/home/Categories";
-
+import SEO from "@/components/seo/SEO";
 import { useArticles } from "@/hooks/useArticles";
 
 export default function Home() {
@@ -38,6 +38,11 @@ export default function Home() {
       <Categories
         categories={[]}
       />
+      <SEO
+  title="TechZeon"
+  description="As principais notícias sobre Inteligência Artificial, Hardware, Software, Segurança Digital, Programação e Tecnologia."
+  canonical="/"
+/>
     </>
   );
 }

@@ -1,9 +1,9 @@
 import { CalendarDays, Clock3 } from "lucide-react";
 import { Link } from "react-router-dom";
-import type { HeroArticle } from "./Hero.types";
+import type { Article } from "@/types";
 
 interface HeroFeaturedProps {
-  article?: HeroArticle | null;
+  article?: Article | null;
 }
 
 export default function HeroFeatured({ article }: HeroFeaturedProps) {
@@ -23,7 +23,7 @@ export default function HeroFeatured({ article }: HeroFeaturedProps) {
         />
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent" />
 
       <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8 lg:p-10">
         {article.category && (
@@ -45,7 +45,11 @@ export default function HeroFeatured({ article }: HeroFeaturedProps) {
         <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-zinc-300">
           {article.author && (
             <span className="font-medium">
-              {article.author}
+             {
+  typeof article.author === "string"
+    ? article.author
+    : article.author.name
+}
             </span>
           )}
 

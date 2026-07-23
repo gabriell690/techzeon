@@ -1,8 +1,8 @@
 import HeroCard from "./HeroCard";
-import type { HeroArticle } from "./Hero.types";
+import type { Article } from "@/types";
 
 interface HeroSidebarProps {
-  articles: HeroArticle[];
+  articles: Article[];
 }
 
 export default function HeroSidebar({

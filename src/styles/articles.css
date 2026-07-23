@@ -1,0 +1,270 @@
+/* ===========================
+   ARTICLE LAYOUT
+=========================== */
+
+.article-content{
+    width:100%;
+    max-width:920px;
+    margin:0 auto;
+}
+
+.article-content > *{
+    width:100%;
+}
+
+/* ===========================
+   PARÁGRAFOS
+=========================== */
+
+.article-content p{
+    max-width:100%;
+}
+
+/* primeiro parágrafo */
+
+.article-content > p:first-of-type {
+    font-size: 1.45rem;
+    line-height: 2;
+    font-weight: 500;
+    color: #f4f4f5;
+    margin-bottom: 3rem;
+}
+
+/* ===========================
+   HEADINGS
+=========================== */
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4{
+
+    font-family:"Montserrat",sans-serif;
+
+    color:#fff;
+
+    line-height:1.2;
+
+    font-weight:700;
+
+    letter-spacing:-.02em;
+}
+
+.article-content h2 {
+    font-size: clamp(2.2rem, 3vw, 3rem);
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    font-weight: 800;
+}
+
+.article-content h3 {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.article-content h4{
+
+    font-size:1.4rem;
+
+    margin-top:2rem;
+}
+
+/* ===========================
+   LINKS
+=========================== */
+
+.article-content a{
+
+    color:#22d3ee;
+
+    text-decoration:none;
+
+    transition:.25s;
+
+    border-bottom:1px solid rgba(34,211,238,.35);
+}
+
+.article-content a:hover{
+
+    color:#67e8f9;
+
+    border-color:#67e8f9;
+}
+
+/* ===========================
+   NEGRITO
+=========================== */
+
+.article-content strong{
+
+    color:#fff;
+
+    font-weight:700;
+}
+
+/* ===========================
+   LISTAS
+=========================== */
+
+.article-content ul,
+.article-content ol{
+
+    margin:2rem 0;
+
+    padding-left:2rem;
+}
+
+.article-content li{
+
+    margin:.9rem 0;
+
+    line-height:2;
+}
+
+/* ===========================
+   BLOCKQUOTE
+=========================== */
+
+.article-content blockquote{
+
+    margin:3rem 0;
+
+    padding:2rem;
+
+    border-left:5px solid #06b6d4;
+
+    border-radius:18px;
+
+    background:#18181b;
+
+    color:#fafafa;
+
+    font-style:italic;
+}
+
+/* ===========================
+   IMAGENS
+=========================== */
+
+.article-content img {
+    width: 100%;
+    max-width: 1100px;
+    margin: 4rem auto;
+    display: block;
+    border-radius: 24px;
+}
+
+.article-content img:hover{
+
+    transform:scale(1.015);
+}
+
+/* ===========================
+   CÓDIGO
+=========================== */
+
+.article-content pre {
+    background: #09090b;
+    border: 1px solid #27272a;
+    border-radius: 20px;
+    padding: 1.8rem;
+    overflow-x: auto;
+}
+
+.article-content code{
+
+    font-family:"JetBrains Mono",monospace;
+
+    font-size:.95rem;
+}
+
+/* ===========================
+   TABELAS
+=========================== */
+
+.article-content table{
+
+    width:100%;
+
+    margin:2rem 0;
+
+    border-collapse:collapse;
+
+    overflow:hidden;
+
+    border-radius:16px;
+}
+
+.article-content th{
+
+    background:#111827;
+
+    color:#fff;
+
+    padding:14px;
+}
+
+.article-content td{
+
+    padding:14px;
+
+    border-top:1px solid #27272a;
+}
+
+/* ===========================
+   HR
+=========================== */
+
+.article-content hr {
+    width: 120px;
+    margin: 5rem auto;
+    border: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #06b6d4,
+        transparent
+    );
+}
+/* ===========================
+   SELEÇÃO
+=========================== */
+
+.article-content ::selection{
+
+    background:#06b6d4;
+
+    color:white;
+}
+
+/* ===========================
+   RESPONSIVO
+=========================== */
+
+@media (max-width:768px){
+
+.article-content{
+
+    max-width:100%;
+}
+
+.article-content h2{
+
+    font-size:2rem;
+}
+
+.article-content h3{
+
+    font-size:1.5rem;
+}
+
+.article-content p{
+
+    font-size:1.05rem;
+
+    line-height:1.9;
+}
+
+}

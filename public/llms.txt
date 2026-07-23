@@ -1,0 +1,39 @@
+# TechZeon
+
+> Portal brasileiro de tecnologia, inteligência artificial, hardware, software, programação e segurança digital.
+
+## Website
+
+https://techzeonbrasil.vercel.app
+
+## Description
+
+TechZeon publica notícias, análises, tutoriais e guias sobre tecnologia, inteligência artificial, hardware, software, programação e segurança digital.
+
+## Main Sections
+
+- Home
+- Inteligência Artificial
+- Hardware
+- Software
+- Programação
+- Segurança
+- Sobre
+- Contato
+
+## Content
+
+- Notícias
+- Guias
+- Tutoriais
+- Reviews
+- Comparativos
+- Análises
+
+## Language
+
+pt-BR
+
+## License
+
+© TechZeon. Todos os direitos reservados.

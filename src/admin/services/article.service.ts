@@ -45,6 +45,22 @@ export async function getArticleBySlug(
 
   return data as Article;
 }
+export async function getArticlesByCategory(
+  categoryId: string
+) {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .eq("status", "published")
+    .eq("category_id", categoryId)
+    .order("published_at", {
+      ascending: false,
+    });
+
+  if (error) throw error;
+
+  return data;
+}
 
 export async function createArticle(
   article: CreateArticleDTO

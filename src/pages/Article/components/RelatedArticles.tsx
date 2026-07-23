@@ -1,76 +1,32 @@
-import { useEffect, useState } from "react";
+// src/components/article/RelatedArticles.tsx
 
-import type { Article } from "@/types/article";
-import { articlesApi } from "@/features/articles/api/articles.api";
-
-import SectionHeader from "@/components/editorial/SectionHeader";
+import type { Article } from "@/types";
 
 interface Props {
-  article: Article;
+  currentArticle: Article;
 }
 
-export default function RelatedArticles({ article }: Props) {
-  const [related, setRelated] = useState<Article[]>([]);
-
-  useEffect(() => {
-    async function loadRelated() {
-      try {
-        const articles = await articlesApi.getPublished();
-
-        const filtered = articles
-          .filter(
-            (a) =>
-              a.id !== article.id &&
-              a.category_id === article.category_id
-          )
-          .slice(0, 3);
-
-        setRelated(filtered);
-      } catch (error) {
-        console.error("Erro ao carregar artigos relacionados:", error);
-      }
-    }
-
-    loadRelated();
-  }, [article]);
-
-  if (!related.length) return null;
-
+export default function RelatedArticles({
+  currentArticle,
+}: Props) {
   return (
-    <section className="border-t border-zinc-800 py-24">
-      <div className="mx-auto max-w-7xl px-8">
-        <SectionHeader
-          badge="Relacionados"
-          title="Continue lendo"
-          description="Mais conteúdos da mesma categoria."
-        />
+    <section className="mt-20">
+      <h2 className="mb-8 text-3xl font-bold">
+        Continue lendo
+      </h2>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {related.map((item) => (
-            <article
-              key={item.id}
-              className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 transition hover:border-blue-500"
-            >
-              <span className="text-xs uppercase tracking-widest text-blue-400">
-                {item.category_id ?? "Sem categoria"}
-              </span>
+      <div className="rounded-2xl border border-zinc-200 bg-white p-8 dark:border-zinc-800 dark:bg-zinc-900">
+        <p className="text-zinc-500">
+          Em breve serão exibidos artigos relacionados.
+        </p>
 
-              <h3 className="mt-3 text-xl font-bold text-white">
-                {item.title}
-              </h3>
+        <h3 className="mt-4 text-xl font-semibold">
+          Artigo atual:
+        </h3>
 
-              <p className="mt-3 text-sm text-zinc-400 line-clamp-3">
-                {item.excerpt}
-              </p>
-
-              <div className="mt-6 text-xs text-zinc-500">
-                {item.published_at
-                  ? new Date(item.published_at).toLocaleDateString("pt-BR")
-                  : "Não publicado"}
-              </div>
-            </article>
-          ))}
-        </div>
+        <p className="mt-2">
+          {currentArticle.title}
+        </p>
       </div>
     </section>
   );
