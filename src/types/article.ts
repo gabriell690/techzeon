@@ -6,15 +6,14 @@ export interface ArticleCategory {
   id: string;
   name: string;
   slug: string;
+  color?: string;
 }
-
 export interface ArticleAuthor {
   id?: string;
   name: string;
   avatar?: string;
   bio?: string;
 }
-
 export interface Article {
   id: string;
 

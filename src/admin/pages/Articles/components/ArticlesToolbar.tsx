@@ -1,53 +1,66 @@
-import { useState } from "react";
+// src/admin/pages/articles/components/ArticlesToolbar.tsx
 
 import CategoryFilter from "./CategoryFilter";
 import NewArticleButton from "./NewArticleButton";
 import SearchArticles from "./SearchArticles";
 import StatusFilter from "./StatusFilter";
 
-export default function ArticlesToolbar() {
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("");
-  const [category, setCategory] = useState("");
+interface ArticlesToolbarProps {
+  search: string;
+  status: string;
+  category: string;
 
+  onSearchChange: (value: string) => void;
+  onStatusChange: (value: string) => void;
+  onCategoryChange: (value: string) => void;
+}
+
+export default function ArticlesToolbar({
+  search,
+  status,
+  category,
+  onSearchChange,
+  onStatusChange,
+  onCategoryChange,
+}: ArticlesToolbarProps) {
   return (
     <div
       className="
-        grid
-        grid-cols-1
-        gap-3
+        flex
+        flex-col
+        gap-4
         rounded-2xl
         border
         border-zinc-800
         bg-zinc-900
-        p-4
-        sm:p-5
-        lg:flex
+        p-5
+
+        lg:flex-row
         lg:items-center
       "
     >
-      <div className="w-full lg:w-80">
+      <div className="flex-1">
         <SearchArticles
           value={search}
-          onChange={setSearch}
+          onChange={onSearchChange}
         />
       </div>
 
       <div className="w-full lg:w-52">
         <StatusFilter
           value={status}
-          onChange={setStatus}
+          onChange={onStatusChange}
         />
       </div>
 
-      <div className="w-full lg:w-52">
+      <div className="w-full lg:w-56">
         <CategoryFilter
           value={category}
-          onChange={setCategory}
+          onChange={onCategoryChange}
         />
       </div>
 
-      <div className="w-full lg:ml-auto lg:w-auto">
+      <div className="lg:ml-auto">
         <NewArticleButton />
       </div>
     </div>

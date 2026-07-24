@@ -1,30 +1,125 @@
-import { useEffect, useState } from "react";
-import { articlesApi } from "../articles/api/articles.api";
-import type { Article } from "@/types/article";
+/* eslint-disable react-hooks/set-state-in-effect */
+// src/hooks/useArticles.ts
 
-export function useArticles() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-  useEffect(() => {
-    async function loadArticles() {
+import { articlesApi } from "@/features/articles/api/articles.api";
+
+import type {
+  Article,
+  ListArticlesParams,
+} from "@/types/article";
+
+export function useArticles(
+  initialFilters?: ListArticlesParams
+) {
+  const [articles, setArticles] =
+    useState<Article[]>([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [error, setError] =
+    useState<string | null>(null);
+
+  const [filters, setFilters] =
+    useState<ListArticlesParams>({
+      page: 1,
+      limit: 20,
+      ...initialFilters,
+    });
+
+  const loadArticles =
+    useCallback(async () => {
       try {
-        const data = await articlesApi.getAll();
+        setLoading(true);
+
+        const data =
+          await articlesApi.getAll(filters);
+
         setArticles(data);
+
+        setError(null);
       } catch (err) {
-        setError(err as Error);
+        console.error(err);
+
+        setError(
+          "Não foi possível carregar os artigos."
+        );
       } finally {
         setLoading(false);
       }
-    }
+    }, [filters]);
 
+  useEffect(() => {
     loadArticles();
-  }, []);
+  }, [loadArticles]);
+
+  const published =
+    useMemo(
+      () =>
+        articles.filter(
+          (a) =>
+            a.status === "published"
+        ).length,
+      [articles]
+    );
+
+  const drafts =
+    useMemo(
+      () =>
+        articles.filter(
+          (a) =>
+            a.status === "draft"
+        ).length,
+      [articles]
+    );
+
+  const totalViews =
+    useMemo(
+      () =>
+        articles.reduce(
+          (acc, article) =>
+            acc +
+            (article.views ?? 0),
+          0
+        ),
+      [articles]
+    );
+
+  const removeArticle =
+    useCallback(
+      (id: string) => {
+        setArticles((current) =>
+          current.filter(
+            (article) =>
+              article.id !== id
+          )
+        );
+      },
+      []
+    );
 
   return {
     articles,
+
     loading,
+
     error,
+
+    filters,
+
+    setFilters,
+
+    refresh: loadArticles,
+
+    removeArticle,
+
+    stats: {
+      total: articles.length,
+      published,
+      drafts,
+      totalViews,
+    },
   };
 }

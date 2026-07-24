@@ -1,12 +1,13 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable react-hooks/preserve-manual-memoization */
-import { useCallback, useEffect, useState } from "react";
+/* eslint-disable react-hooks/set-state-in-effect */
 
-import { getArticles } from "@/admin/services/article.service";
-import type { Article } from "@/types/article";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import { articlesApi } from "@/features/articles/api/articles.api";
+import type { Article, ArticleStatus } from "@/types/article";
 
 interface UseArticlesOptions {
-  status?: "draft" | "published" | "archived";
+  status?: ArticleStatus;
 }
 
 export function useArticles(options?: UseArticlesOptions) {
@@ -19,7 +20,7 @@ export function useArticles(options?: UseArticlesOptions) {
       setLoading(true);
       setError(null);
 
-      const data = await getArticles();
+      const data = await articlesApi.getAll();
 
       const filtered = options?.status
         ? data.filter(
@@ -29,10 +30,12 @@ export function useArticles(options?: UseArticlesOptions) {
 
       setArticles(filtered);
     } catch (err) {
+      console.error(err);
+
       setError(
         err instanceof Error
           ? err.message
-          : "Erro ao carregar artigos."
+          : "Não foi possível carregar os artigos."
       );
     } finally {
       setLoading(false);
@@ -43,29 +46,59 @@ export function useArticles(options?: UseArticlesOptions) {
     loadArticles();
   }, [loadArticles]);
 
-  function removeArticle(id: string) {
+  const refresh = useCallback(() => {
+    return loadArticles();
+  }, [loadArticles]);
+
+  const removeArticle = useCallback((id: string) => {
     setArticles((prev) =>
       prev.filter((article) => article.id !== id)
     );
-  }
+  }, []);
 
-  function updateArticle(article: Article) {
+  const updateArticle = useCallback((article: Article) => {
     setArticles((prev) =>
       prev.map((item) =>
         item.id === article.id ? article : item
       )
     );
-  }
+  }, []);
 
-  function addArticle(article: Article) {
+  const addArticle = useCallback((article: Article) => {
     setArticles((prev) => [article, ...prev]);
-  }
+  }, []);
+
+  const stats = useMemo(() => {
+    const published = articles.filter(
+      (article) => article.status === "published"
+    ).length;
+
+    const drafts = articles.filter(
+      (article) => article.status === "draft"
+    ).length;
+
+    const totalViews = articles.reduce(
+      (total, article) => total + (article.views ?? 0),
+      0
+    );
+
+    return {
+      total: articles.length,
+      published,
+      drafts,
+      totalViews,
+    };
+  }, [articles]);
 
   return {
     articles,
     loading,
     error,
-    refresh: loadArticles,
+
+    stats,
+
+    refresh,
+
     removeArticle,
     updateArticle,
     addArticle,

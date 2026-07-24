@@ -1,33 +1,48 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-interface LatestArticlesProps {
-  articles: any[];
+// src/components/home/LatestArticles.tsx
+
+import type { Article } from "@/types/article";
+import ArticleCard from "../../article/ArticleCard";
+
+interface Props {
+  articles: Article[];
 }
 
 export default function LatestArticles({
   articles,
-}: LatestArticlesProps) {
+}: Props) {
+
+  if (!articles.length) return null;
+
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
-      <h2 className="mb-8 text-3xl font-bold">
-        Últimos Artigos
-      </h2>
+    <section className="py-20">
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {articles.map((article) => (
-          <article
-            key={article.id}
-            className="rounded-xl border p-6"
-          >
-            <h3 className="font-semibold">
-              {article.title}
-            </h3>
+      <div className="mx-auto max-w-7xl px-6">
 
-            <p className="mt-3 text-sm text-zinc-500">
-              {article.excerpt}
-            </p>
-          </article>
-        ))}
+        <div className="mb-10">
+
+          <h2 className="text-4xl font-black text-white">
+            Últimos Artigos
+          </h2>
+
+          <p className="mt-2 text-zinc-400">
+            Notícias recentes do universo da tecnologia.
+          </p>
+
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+
+          {articles.map((article) => (
+            <ArticleCard
+              key={article.id}
+              article={article}
+            />
+          ))}
+
+        </div>
+
       </div>
+
     </section>
   );
 }

@@ -1,27 +1,39 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-interface FeaturedProps {
-  article: any;
+// src/components/home/Featured.tsx
+
+import HeroFeatured from "../Hero/HeroFeatured";
+import type { Article } from "@/types/article";
+
+interface Props {
+  article: Article;
 }
 
 export default function Featured({
   article,
-}: FeaturedProps) {
+}: Props) {
   if (!article) return null;
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
-      <h2 className="mb-8 text-3xl font-bold">
-        Artigo em destaque
-      </h2>
+    <section className="py-20">
+      <div className="mx-auto max-w-7xl px-6">
 
-      <div className="rounded-2xl border p-8 shadow-sm">
-        <h3 className="text-3xl font-bold">
-          {article.title}
-        </h3>
+        <div className="mb-10 flex items-center justify-between">
 
-        <p className="mt-4 text-zinc-500">
-          {article.excerpt}
-        </p>
+          <div>
+
+            <h2 className="text-4xl font-black text-white">
+              Artigo em destaque
+            </h2>
+
+            <p className="mt-2 text-zinc-400">
+              O conteúdo mais importante do momento.
+            </p>
+
+          </div>
+
+        </div>
+
+        <HeroFeatured article={article} />
+
       </div>
     </section>
   );
