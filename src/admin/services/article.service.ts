@@ -10,7 +10,14 @@ const TABLE = "articles";
 export async function getArticles() {
   const { data, error } = await supabase
     .from(TABLE)
-    .select("*")
+    .select(`
+  *,
+  categories (
+    id,
+    name,
+    slug
+  )
+`)
     .order("created_at", {
       ascending: false,
     });
@@ -23,7 +30,14 @@ export async function getArticles() {
 export async function getArticle(id: string) {
   const { data, error } = await supabase
     .from(TABLE)
-    .select("*")
+   .select(`
+  *,
+  categories (
+    id,
+    name,
+    slug
+  )
+`)
     .eq("id", id)
     .single();
 
@@ -37,7 +51,14 @@ export async function getArticleBySlug(
 ) {
   const { data, error } = await supabase
     .from(TABLE)
-    .select("*")
+    .select(`
+  *,
+  categories (
+    id,
+    name,
+    slug
+  )
+`)
     .eq("slug", slug)
     .single();
 
@@ -50,7 +71,14 @@ export async function getArticlesByCategory(
 ) {
   const { data, error } = await supabase
     .from("articles")
-    .select("*")
+    .select(`
+  *,
+  categories (
+    id,
+    name,
+    slug
+  )
+`)
     .eq("status", "published")
     .eq("category_id", categoryId)
     .order("published_at", {

@@ -116,10 +116,10 @@ await createArticle({
   excerpt,
   content,
   cover_image,
-  author: "Administrador",
+  author: "Tech Zeon Brasil",
   category_id: category || undefined,
   featured: false,
-  status,
+  status: publish,
 });
 
       alert(
